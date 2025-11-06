@@ -13,6 +13,13 @@ public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where 
 
 	protected override void OnAwake()
 	{
+		// We're running ExecuteInEditor, which means we should ignore instances.
+		if ( ExecutingInEditor() )
+		{
+			Log.Warning( $"OnAwake called in editor with ExecuteInEditor, ignoring." );
+			return;
+		}
+
 		if ( Instance.IsValid() )
 		{
 			Log.Warning( $"Singleton tried to initialize another {typeof(T)}!" );
@@ -45,5 +52,11 @@ public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where 
 		{
 			Instance = (T)this;
 		}
+	}
+	
+	private static bool ExecutingInEditor()
+	{
+		var executeInEditorDesc = TypeLibrary.GetType<ExecuteInEditor>();
+		return executeInEditorDesc is not null && Game.IsEditor;
 	}
 }

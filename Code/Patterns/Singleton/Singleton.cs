@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace WackyLib.Patterns;
 
+/// <summary>
+/// Represents a Singleton component. Which is a component that we can access through an instance, and only one can be allowed in a scene at once.
+/// </summary>
 public abstract class Singleton<T> : Component, IHotloadManaged where T : Singleton<T>
 {
 #nullable enable
@@ -13,6 +16,13 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 
 	protected override void OnAwake()
 	{
+		// We're running ExecuteInEditor, which means we should ignore instances.
+		if ( ExecutingInEditor() )
+		{
+			Log.Warning( $"OnAwake called in editor with ExecuteInEditor, ignoring." );
+			return;
+		}
+		
 		if ( Instance.IsValid() )
 		{
 			Log.Warning( $"Singleton tried to initialize another {typeof(T)}!" );
@@ -45,5 +55,11 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 		{
 			Instance = (T)this;
 		}
+	}
+
+	private static bool ExecutingInEditor()
+	{
+		var executeInEditorDesc = TypeLibrary.GetType<ExecuteInEditor>();
+		return executeInEditorDesc is not null && Game.IsEditor;
 	}
 }
