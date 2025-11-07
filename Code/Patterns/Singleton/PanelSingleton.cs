@@ -16,10 +16,16 @@ public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where 
 		// We're running ExecuteInEditor, which means we should ignore instances.
 		if ( ExecutingInEditor() )
 		{
-			Log.Warning( $"OnAwake called in editor with ExecuteInEditor, ignoring." );
+			Log.Info( $"OnAwake called in editor with ExecuteInEditor, creating once." );
+			
+			if ( Active )
+			{
+				Instance = (T)this;
+			}
+			
 			return;
 		}
-
+		
 		if ( Instance.IsValid() )
 		{
 			Log.Warning( $"Singleton tried to initialize another {typeof(T)}!" );

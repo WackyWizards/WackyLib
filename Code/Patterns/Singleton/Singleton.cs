@@ -19,7 +19,13 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 		// We're running ExecuteInEditor, which means we should ignore instances.
 		if ( ExecutingInEditor() )
 		{
-			Log.Warning( $"OnAwake called in editor with ExecuteInEditor, ignoring." );
+			Log.Info( $"OnAwake called in editor with ExecuteInEditor, creating once." );
+			
+			if ( Active )
+			{
+				Instance = (T)this;
+			}
+			
 			return;
 		}
 		
