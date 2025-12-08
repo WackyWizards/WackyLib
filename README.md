@@ -1,2 +1,2 @@
 # WackyLib
-Utilities and extensions library for WW S&Box games.
+Utilities and extensions library primarily used by Wacky Wizards for our s&box games.
