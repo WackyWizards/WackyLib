@@ -5,35 +5,41 @@ namespace Sandbox;
 
 public static class LoggerExtensions
 {
-	/// <summary>
-	/// Logs a message only when running in the editor.
-	/// </summary>
-	public static void EditorLog( this Logger logger, object message, LogType type = LogType.Info )
+	extension( Logger logger )
 	{
-		if ( !Game.IsEditor )
+		/// <summary>
+		/// Logs a message only when running in the editor.
+		/// </summary>
+		/// <param name="message">Message to log.</param>
+		/// <param name="type">Type of logging to use.</param>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if the provided LogType is not in range of valid values.</exception>
+		public void EditorLog( object message, LogType type = LogType.Info )
 		{
-			return;
-		}
-		
-		switch ( type )
-		{
-			case LogType.Info:
-				logger.Info( message );
-				break;
-			case LogType.Warning:
-				logger.Warning( message );
-				break;
-			case LogType.Error:
-				logger.Error( message );
-				break;
-			case LogType.Trace:
-				logger.Trace( message );
-				break;
-			default:
-				throw new ArgumentOutOfRangeException( nameof( type ), type, null );
+			if ( !Game.IsEditor )
+			{
+				return;
+			}
+			
+			switch ( type )
+			{
+				case LogType.Info:
+					logger.Info( message );
+					break;
+				case LogType.Warning:
+					logger.Warning( message );
+					break;
+				case LogType.Error:
+					logger.Error( message );
+					break;
+				case LogType.Trace:
+					logger.Trace( message );
+					break;
+				default:
+					throw new ArgumentOutOfRangeException( nameof( type ), type, null );
+			}
 		}
 	}
-
+	
 	public enum LogType
 	{
 		Info,
