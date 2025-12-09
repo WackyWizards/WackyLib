@@ -1,5 +1,6 @@
-﻿using Sandbox;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Sandbox;
+using Sandbox.Diagnostics;
 
 namespace WackyLib.Patterns;
 
@@ -13,6 +14,8 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 	// ReSharper disable once MemberCanBePrivate.Global
 	public static T? Instance { get; private set; }
 #pragma warning restore SB3000
+	
+	private readonly Logger Log = new( "Singleton" );
 
 	protected override void OnAwake()
 	{
