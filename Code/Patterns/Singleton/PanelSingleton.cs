@@ -12,7 +12,7 @@ public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where 
 	public static T? Instance { get; private set; }
 #pragma warning restore SB3000
 	
-	private readonly Logger Log = new( "PanelSingleton" );
+	private readonly Logger Log = new( "Singleton" );
 	
 	protected override void OnAwake()
 	{
@@ -63,9 +63,14 @@ public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where 
 		}
 	}
 	
-	private static bool ExecutingInEditor()
+	private bool ExecutingInEditor()
 	{
-		var executeInEditorDesc = TypeLibrary.GetType<ExecuteInEditor>();
-		return executeInEditorDesc is not null && Game.IsEditor;
+		if ( !Game.IsEditor )
+		{
+			return false;
+		}
+		
+		var type = GetType();
+		return typeof(ExecuteInEditor).IsAssignableFrom( type );
 	}
 }

@@ -16,7 +16,7 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 #pragma warning restore SB3000
 	
 	private readonly Logger Log = new( "Singleton" );
-
+	
 	protected override void OnAwake()
 	{
 		// We're running ExecuteInEditor, which means we should ignore instances.
@@ -38,13 +38,13 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 			Destroy();
 			return;
 		}
-
+		
 		if ( Active )
 		{
 			Instance = (T)this;
 		}
 	}
-
+	
 	protected override void OnDestroy()
 	{
 		if ( Instance == this )
@@ -57,7 +57,7 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 	{
 		state["IsActive"] = Instance == this;
 	}
-
+	
 	void IHotloadManaged.Created( IReadOnlyDictionary<string, object> state )
 	{
 		if ( state.GetValueOrDefault( "IsActive" ) is true )
@@ -65,10 +65,15 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 			Instance = (T)this;
 		}
 	}
-
-	private static bool ExecutingInEditor()
+	
+	private bool ExecutingInEditor()
 	{
-		var executeInEditorDesc = TypeLibrary.GetType<ExecuteInEditor>();
-		return executeInEditorDesc is not null && Game.IsEditor;
+		if ( !Game.IsEditor )
+		{
+			return false;
+		}
+		
+		var type = GetType();
+		return typeof(ExecuteInEditor).IsAssignableFrom( type );
 	}
 }
