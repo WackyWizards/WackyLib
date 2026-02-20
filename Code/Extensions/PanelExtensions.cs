@@ -31,7 +31,7 @@ public static class PanelComponentExtensions
 		/// </summary>
 		public void Hide()
 		{
-			component.Panel.AddClass( "hidden" );
+			component.Panel.Hide();
 		}
 		
 		/// <summary>
@@ -39,7 +39,7 @@ public static class PanelComponentExtensions
 		/// </summary>
 		public void Show()
 		{
-			component.Panel.RemoveClass( "hidden" );
+			component.Panel.Show();
 		}
 	}
 }
