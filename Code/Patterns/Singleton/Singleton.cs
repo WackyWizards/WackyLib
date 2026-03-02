@@ -28,6 +28,11 @@ public abstract class Singleton<T> : Component, IHotloadManaged where T : Single
 			
 			if ( Active )
 			{
+				if ( Instance.IsValid() && Instance != this )
+				{
+					Log.Warning( $"Multiple {typeof(T)} instances detected in the scene! Only one will be used in-game." );
+				}
+				
 				Instance = (T)this;
 			}
 			

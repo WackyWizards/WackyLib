@@ -28,6 +28,11 @@ public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where 
 			
 			if ( Active )
 			{
+				if ( Instance.IsValid() && Instance != this )
+				{
+					Log.Warning( $"Multiple {typeof(T)} instances detected in the scene! Only one will be used in-game." );
+				}
+				
 				Instance = (T)this;
 			}
 			
@@ -40,7 +45,7 @@ public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where 
 			Destroy();
 			return;
 		}
-
+		
 		if ( Active )
 		{
 			Instance = (T)this;
