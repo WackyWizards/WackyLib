@@ -4,6 +4,11 @@ using Sandbox.Diagnostics;
 
 namespace WackyLib.Patterns;
 
+/// <summary>
+/// Represents a Singleton component. Which is a component that we can access through an instance, and only one can be allowed in a scene at once.
+/// In-game, duplicate instances are automatically destroyed. In the editor (with ExecuteInEditor), multiple instances are permitted to coexist
+/// for tooling purposes, but a warning is logged, as only one instance will survive when the game runs (the latest awakened component).
+/// </summary>
 public abstract class PanelSingleton<T> : PanelComponent, IHotloadManaged where T : PanelSingleton<T>
 {
 #nullable enable
