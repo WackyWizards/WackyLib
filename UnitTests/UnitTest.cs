@@ -5,15 +5,18 @@ namespace WackyLib.Tests;
 [TestClass]
 public class TestInit
 {
+	private static Sandbox.TestAppSystem AppSystem;
+	
 	[AssemblyInitialize]
-	public static void ClassInitialize( TestContext context )
+	public static void AssemblyInitialize( TestContext context )
 	{
-		Sandbox.Application.InitUnitTest<TestInit>( false );
+		AppSystem = new Sandbox.TestAppSystem();
+		AppSystem.Init();
 	}
-
+	
 	[AssemblyCleanup]
 	public static void AssemblyCleanup()
 	{
-		Sandbox.Application.ShutdownUnitTest();
+		AppSystem.Shutdown();
 	}
 }
