@@ -51,6 +51,24 @@ public static class PanelCreatorExtensions
 {
 	extension( PanelCreator panelCreator )
 	{
+		public Button Button()
+		{
+			var button = new Button();
+			return panelCreator.panel.AddChild( button );
+		}
+		
+		public Button Button( string text, Action onClick )
+		{
+			var button = new Button( text, onClick );
+			return panelCreator.panel.AddChild( button );
+		}
+		
+		public Button Button( string text, string icon )
+		{
+			var button = new Button( text, icon );
+			return panelCreator.panel.AddChild( button );
+		}
+		
 		public Button Button( string text, string icon, Action onClick )
 		{
 			var button = new Button( text, icon, onClick );
