@@ -1,4 +1,7 @@
-﻿namespace Sandbox.UI;
+﻿using System;
+using Sandbox.UI.Construct;
+
+namespace Sandbox.UI;
 
 public static class PanelExtensions
 {
@@ -40,6 +43,24 @@ public static class PanelComponentExtensions
 		public void Show()
 		{
 			component.Panel.Show();
+		}
+	}
+}
+
+public static class PanelCreatorExtensions
+{
+	extension( PanelCreator panelCreator )
+	{
+		public Button Button( string text, string icon, Action onClick )
+		{
+			var button = new Button( text, icon, onClick );
+			return panelCreator.panel.AddChild( button );
+		}
+		
+		public Button Button( string text, string icon, string className, Action onClick )
+		{
+			var button = new Button( text, icon, className, onClick );
+			return panelCreator.panel.AddChild( button );
 		}
 	}
 }
