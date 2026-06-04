@@ -38,7 +38,8 @@ public static class SceneExtensions
 		}
 		
 		/// <summary>
-		/// Search the scene for a specific component instance.
+		/// Search the scene for a specific component instance. <br/>
+		/// This method can only be used to find enabled/active components.
 		/// </summary>
 		/// <typeparam name="T">Component to search for.</typeparam>
 		/// <returns>Found component instance.</returns>
